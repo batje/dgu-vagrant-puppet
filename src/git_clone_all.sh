@@ -3,7 +3,7 @@
 # git clone steps
 # ---------------
 
-git clone	git@github.com:datagovuk/ckan
+git clone https://github.com/datagovuk/ckan
 cd ckan
 git checkout release-v2.0.1-dgu
 git remote add okfn git@github.com:okfn/ckan
