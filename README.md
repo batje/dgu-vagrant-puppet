@@ -184,6 +184,14 @@ Find full details of the CKAN paster commands is here: http://docs.ckan.org/en/c
 For Drupal you will need to complete the configuration of the LAMP stack and get a working drush installation.  Please see https://drupal.org/requirements for detailed requirements. You can get drush and it's installation instructions from
 here: https://github.com/drush-ops/drush
 
+Besides the standard Drupal requirements, you should also install curl
+
+  sudo apt-get install php5-curl curl
+  
+restart Apache
+
+  sudo service apache2 restart
+
 Get the DGU Drupal Distribution using:
 
     git clone https://github.com/datagovuk/dgu_d7.git
@@ -200,11 +208,16 @@ successfully, you should enable some modules:
 
 ````bash
 $ drush --yes en dgu_site_feature  
-$ drush --yes en composer_manager  
 $ drush --yes en dgu_app dgu_blog dgu_consultation dgu_data_set dgu_data_set_request dgu_footer dgu_forum dgu_glossary dgu_idea dgu_library dgu_linked_data dgu_location dgu_organogram dgu_promo_items dgu_reply dgu_shared_fields dgu_user dgu_taxonomy ckan dgu_search dgu_services dgu_home_page
-$ drush --yes en ckan
 ````
 
+The default install will install the wrong version of guzzle. Fix that:
+
+  drush composer-manager install
+  package: guzzle/guzzle
+  version: v3.1.2
+  package: leave empty
+  
 You will need to configure drupal with the url of your CKAN instance.  We use the following drush commands:
 ````bash
 $ drush vset ckan_url 'http://data.gov.uk/api/';
@@ -240,7 +253,11 @@ $databases['d6source']['default'] = array(
 );
 ````
 
-Drupal uses a second SOLR core.
+Drupal uses a second SOLR core, or if you are running Drupal on a seperate server, you want to install it:
+
+  sudo apt-get install solr-tomcat
+  
+You will then need to change the solr port to 8080
 
 ## 7. Additional configuration
 
